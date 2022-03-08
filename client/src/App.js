@@ -14,21 +14,26 @@ import Logout from "./Routes/Logout";
 function App() {
   const [isLogin, setIsLogin] = useState(true);
   const [userinfo, setUserinfo] = useState(null);
+  const [accessToken, setAccessToken] = useState(null);
   const navigate = useNavigate();
 
   const isAuthenticated = async () => {
-    const data = await axios.get("https://localhost:3000/auth", {
-      headers: { "Content-Type": "application/json" },
+    const data = await axios.get("https://localhost:4000/auth", {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: accessToken,
+      },
       withCredentials: true,
     });
 
     if (data) {
       setIsLogin(true);
-      setUserinfo(data.data.data.userInfo);
+      setUserinfo(data.data.userInfo);
       navigate("/");
     }
   };
-  const handleResponseSuccess = () => {
+  const handleResponseSuccess = (accessToken) => {
+    setAccessToken(accessToken);
     isAuthenticated();
   };
   const handleLogout = () => {
@@ -55,7 +60,7 @@ function App() {
         <Route path="/myfrigo" element={<Myfrigo isLogin={isLogin} />}></Route>
         <Route path="/mypage" element={<MyPage userinfo={userinfo} />}></Route>
         <Route path="/recipe" element={<Recipe />}></Route>
-        <Route path="/post" element={<Post />}>
+        <Route path="/post" element={<Post isLogin={isLogin} />}>
           <Route path=":tags" element={<QuickPost />} />
         </Route>
         <Route

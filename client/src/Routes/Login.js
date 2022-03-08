@@ -111,15 +111,16 @@ function Login({ handleResponseSuccess }) {
 
       axios
         .post(
-          "https://localhost:4000/signin",
+          "https://localhost:4000/login",
           { email, password },
           {
             headers: { "Content-Type": "application/json" },
             withCredentials: true,
           },
         )
-        .then(() => {
-          handleResponseSuccess();
+        .then((res) => {
+          const accessToken = res.accessToken;
+          handleResponseSuccess(accessToken);
         })
         .catch((err) => console.log(err));
     } else {

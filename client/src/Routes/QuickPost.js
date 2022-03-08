@@ -71,7 +71,7 @@ function QuickPost() {
 
   const addPost = () => {
     setShow(false);
-    axios.post("https://localhost:3000/post").then((res) => {
+    axios.post("https://localhost:4000/post").then((res) => {
       //버튼 누르면 QuickPost창이 사라져야 한다
     });
   };

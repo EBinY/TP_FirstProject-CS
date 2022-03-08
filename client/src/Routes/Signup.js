@@ -62,7 +62,7 @@ function Signup() {
 
   const onVaild = async (data) => {
     if (data) {
-      if (data.password !== data.confirmPassword) {
+      if (data.Password !== data.confirmPassword) {
         return setError(
           "confirmPassword",
           { message: "Password are not the same" },
